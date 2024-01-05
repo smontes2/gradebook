@@ -12,7 +12,7 @@ def get_grades():
         print("error")
 
 def add_grades():
-    grade_input = int(grades.get())
+    grade_input = float(grades.get())
 
     with open('test.json', 'r') as file:
         data = json.load(file)
@@ -68,6 +68,7 @@ def delete_all():
     with open('test.json','w') as file:
         file.write("[]")
     
+    label1.config(text="Current grade: 0")
     list_box.delete(0 , END)
 
 # Create a gui window
@@ -77,10 +78,10 @@ window = Tk()
 window.configure(background = 'light blue')
 
 #Set the window size
-window.geometry("400x400")
+window.geometry("700x500")
 
 #Give the application a title
-window.title("Grade Book")
+window.title("Grade Book: Basic")
 
 #Creates a text label
 label1 = Label(window, text="Calculated Grade : 0")
