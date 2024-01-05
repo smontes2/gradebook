@@ -4,10 +4,8 @@ import json
 def get_vars():
 	with open('weighted.json', 'r') as file:
 		data = json.load(file)
-		for i in data["Grade"]:
-			grade_box.insert(END, i)
-		for i in data["Weight"]:
-			weight_box.insert(END, i)
+		update_listboxes(data)
+		grade_calculation(data)
 
 def add():
 
@@ -40,7 +38,6 @@ def delete():
 	with open('weighted.json', 'r') as file:
 		data = json.load(file)
 
-	
 	'Not sure what this does if I am being honest, will look into'
 
 	if "Grade" in data and isinstance(data["Grade"], list):
@@ -63,23 +60,35 @@ def delete():
 
 	grade_box.delete(0, END)
 	weight_box.delete(0, END)
-	grade_box.insert(END, data["Grade"])
-	weight_box.insert(END, data["Weight"])
+	update_listboxes(data)
+	# grade_box.insert(END, data["Grade"])
+	# weight_box.insert(END, data["Weight"])
+
+def update_listboxes(data):
+	
+	with open('weighted.json', 'r') as file:
+		data = json.load(file)
+
+	for i in data["Grade"]:
+		grade_box.insert(END, i)
+	for i in data["Weight"]:
+		weight_box.insert(END, i)
 
 def delete_all():
 
-	# with open('weighted.json', 'r') as file:
-	# 	data = json.load(file)
+	with open('weighted.json', 'r') as file:
+		data = json.load(file)
 
-	# if 'your_key' in data and isinstance(data['your_key'], list):
-	# 	if variable_to_delete in data['your_key']:
-	# 		data['your_key'].remove(variable_to_delete)
+	data["Grade"].clear()
+	data["Weight"].clear()
 
-	# with open('weighted.json', 'w') as file:
-	# 	file.write(test)
+	with open('weighted.json', 'w') as file:
+		json.dump(data, file)
 
-	# grade_box.delete(0, END)
-	pass
+	grade_box.delete(0, END)
+	weight_box.delete(0, END)
+
+	grade_calculation(data)	
 
 def get_grades_and_weights():
 	try:
@@ -106,8 +115,6 @@ def grade_calculation(data):
 
 	label1.config(text=f"Calculated Grade: {totalGrade}")
 		
-
-
 window = Tk()
 
 window.config(background='light blue')
